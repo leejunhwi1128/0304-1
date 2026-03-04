@@ -1,0 +1,38 @@
+{
+  "category": "오늘 제일 잘나가요",
+  "items": [
+    {
+      "rank": 1,
+      "product_name": "국내산 제철 봄동 베타황금봄동 겉절이 배추 쌈채소 쌈배추",
+      "original_price": 14900,
+      "discount_rate": 46,
+      "sale_price": 7900,
+      "hashtags": ["봄동", "봄동겉절이", "봄동무침", "봄쌈배추"]
+    },
+    {
+      "rank": 2,
+      "product_name": "부산 대저 짭짤이토마토 대저토마토 짭짤이",
+      "original_price": 26900,
+      "discount_rate": 48,
+      "sale_price": 13900,
+      "hashtags": ["대저토마토", "대저짭짤이토마토", "부산대저토마토"]
+    },
+    {
+      "rank": 3,
+      "product_name": "강원도 인제 고로쇠 수액 첫물 0.5 18병 1.5L 6병 12병",
+      "original_price": 70000,
+      "discount_rate": 47,
+      "sale_price": 36900,
+      "hashtags": ["고로쇠물", "고로쇠수액", "고로쇠", "하동고로쇠"]
+    },
+    {
+      "rank": 4,
+      "product_name": "햇무 달큰한 제주 세척 월동무 제주무 무우 국내산 무 특상등급",
+      "original_price": 9900,
+      "discount_rate": 40,
+      "sale_price": 5900,
+      "delivery_fee": 3000,
+      "hashtags": ["월동무", "제주무", "세척무", "흙무", "햇무"]
+    }
+  ]
+}

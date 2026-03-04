@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bazar Farm - 오늘 제일 잘나가요</title>
+    <style>
+        /* CSS 스타일 설정 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* 헤더 부분 */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            font-size: 14px;
+            color: #999;
+            position: relative;
+        }
+
+        .tabs-container span {
+            cursor: pointer;
+        }
+
+        .tabs-container .active {
+            color: #333;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .tabs-container .active::before {
+            content: '✓';
+            margin-right: 4px;
+        }
+
+        .view-all {
+            position: absolute;
+            right: 0;
+            text-decoration: none;
+            color: #999;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 상품 그리드 레이아웃 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 이미지 박스 및 랭킹 뱃지 */
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* 1:1 비율 */
+            overflow: hidden;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+
+        .image-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            color: #fff;
+            padding: 4px 10px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        /* 상품 정보 */
+        .info {
+            padding: 12px 0;
+        }
+
+        .title {
+            font-size: 14px;
+            line-height: 1.4;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .original-price {
+            font-size: 12px;
+            color: #bbb;
+            text-decoration: line-through;
+            margin-bottom: 4px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .discount {
+            color: #fa5252;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .sale-price {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .delivery-info {
+            font-size: 11px;
+            color: #bbb;
+            margin-left: 5px;
+        }
+
+        /* 해시태그 */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tag {
+            font-size: 11px;
+            color: #48b8ac;
+            background-color: #f0faf9;
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h2>오늘 제일 잘나가요 🏆</h2>
+        <div class="tabs-container">
+            <span>실시간</span>
+            <span class="active">일간</span>
+            <span>주간</span>
+            <span>월간</span>
+            <a href="#" class="view-all">전체보기 &rarr;</a>
+        </div>
+    </header>
+
+    <div class="product-grid" id="productGrid">
+        </div>
+</div>
+
+<script>
+    // 이미지 내 데이터를 기반으로 한 객체 배열
+    const products = [
+        {
+            rank: 1,
+            img: "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?q=80&w=400&auto=format&fit=crop", // 봄동 대용
+            title: "국내산 제철 봄동 베타황금봄동 겉절이 배추 쌈채소 쌈배추",
+            original: "14,900원",
+            discount: "46%",
+            sale: "7,900원",
+            tags: ["#봄동", "#봄동겉절이", "#봄동무침", "#봄쌈배추"]
+        },
+        {
+            rank: 2,
+            img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=400&auto=format&fit=crop", // 토마토 대용
+            title: "부산 대저 짭짤이토마토 대저토마토 짭짤이",
+            original: "26,900원",
+            discount: "48%",
+            sale: "13,900원",
+            tags: ["#대저토마토", "#대저짭짤이토마토", "#부산대저토마토"]
+        },
+        {
+            rank: 3,
+            img: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=400&auto=format&fit=crop", // 나무/수액 대용
+            title: "강원도 인제 고로쇠 수액 첫물 0.5 18병 1.5L 6병 12병",
+            original: "70,000원",
+            discount: "47%",
+            sale: "36,900원",
+            tags: ["#고로쇠물", "#고로쇠수액", "#고로쇠", "#하동고로쇠"]
+        },
+        {
+            rank: 4,
+            img: "https://images.unsplash.com/photo-1580196782182-c474b1754924?q=80&w=400&auto=format&fit=crop", // 무 대용
+            title: "햇무 달큰한 제주 세척 월동무 제주무 무우 국내산 무 특상등급",
+            original: "9,900원",
+            discount: "40%",
+            sale: "5,900원",
+            delivery: "3,000원",
+            tags: ["#월동무", "#제주무", "#세척무", "#흙무", "#햇무"]
+        }
+    ];
+
+    const grid = document.getElementById('productGrid');
+
+    // 데이터를 HTML로 변환하여 삽입
+    products.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        
+        card.innerHTML = `
+            <div class="image-wrapper">
+                <div class="rank-badge">${p.rank}</div>
+                <img src="${p.img}" alt="${p.title}">
+            </div>
+            <div class="info">
+                <div class="title">${p.title}</div>
+                <div class="original-price">${p.original}</div>
+                <div class="price-row">
+                    <span class="discount">${p.discount}</span>
+                    <span class="sale-price">${p.sale}</span>
+                    ${p.delivery ? `<span class="delivery-info">🚛 ${p.delivery}</span>` : ''}
+                </div>
+                <div class="tags">
+                    ${p.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+</script>
+
+</body>
+</html>
